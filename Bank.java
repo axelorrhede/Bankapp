@@ -28,9 +28,9 @@ public class Bank {
 		return null;
 	}
 
-	public boolean removeAccount(int number) {
+	public boolean removeAccount(int accountNumber) {
 		for (BankAccount account : BankAccounts) {
-			if (account.getAccountNumber() == number) {
+			if (account.getAccountNumber() == accountNumber) {
 				BankAccounts.remove(account);
 				return true;
 			}
@@ -39,10 +39,10 @@ public class Bank {
 
 	}
 
-	ArrayList<BankAccount> getAllAccounts() {
+	public ArrayList<BankAccount> getAllAccounts() {
 		BankAccount account;
 		for (int i = 0; i < BankAccounts.size(); i++) {
-			for (int k = i; k < BankAccounts.size(); k++) { // sus
+			for (int k = i; k < BankAccounts.size(); k++) {
 				if (compareStrings(BankAccounts.get(k).getHolder().getString(),
 						BankAccounts.get(i).getHolder().getString())) {
 					account = BankAccounts.get(k);
@@ -86,5 +86,16 @@ public class Bank {
 		}
 		return sameCustomer;
 	}
+	
+	public ArrayList<Customer> findByPartofName(String namePart){
+		ArrayList<Customer> customers = new ArrayList<Customer>();
+		for (BankAccount account : BankAccounts) {
+			if (account.getHolder().getString().toLowerCase().contains(namePart.toLowerCase())) {
+				customers.add(account.getHolder());
+			}
+		}
+		return customers;
+	}
+
 
 }
