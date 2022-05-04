@@ -13,8 +13,7 @@ public class BankAccount {
 	 * inledningsvis 0 kr.
 	 */
 	public BankAccount(String holderName, long holderId) {
-		Customer ny = new Customer(holderName, holderId);
-		holder = ny; 
+		holder = new Customer(holderName, holderId); 
 		amount = 0;
 		kontoId = rand.nextInt(Integer.MAX_VALUE - 1000) + 1000;
 
@@ -26,11 +25,7 @@ public class BankAccount {
 	 */
 
 	public BankAccount(Customer holder) {
-		holder.getcustomerNbr();
-		holder.getidNr();
-		holder.getString();
 		this.holder = holder;
-		
 		kontoId = rand.nextInt(Integer.MAX_VALUE - 1000) + 1000;
 		amount = 0;
 
