@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Bank {
 	private ArrayList<BankAccount> BankAccounts;
 	String name;
+	BankAccount goodAccount;
 
 	public Bank(String name) {
 		BankAccounts = new ArrayList<BankAccount>();
@@ -15,10 +16,21 @@ public class Bank {
 				return account.getAccountNumber();
 			}
 		}
-		BankAccount newAccount = new BankAccount(holderName, idNr);
-		BankAccounts.add(newAccount);
-		return newAccount.getAccountNumber();
-		
+		Boolean exist = true;
+		while (exist) {
+			exist = false;
+			BankAccount newAccount = new BankAccount(holderName, idNr);
+			goodAccount = newAccount;
+			for (BankAccount account : BankAccounts) {
+				if (newAccount.getAccountNumber() == account.getAccountNumber()) {
+					exist = true;
+					continue;
+				}
+			}
+		}
+		BankAccounts.add(goodAccount);
+		return goodAccount.getAccountNumber();
+
 	}
 
 	public Customer findHolder(long idNr) {
@@ -91,8 +103,8 @@ public class Bank {
 		return null;
 	}
 
-	ArrayList<BankAccount> findAccountsForHolder(long idNr){
-		ArrayList<BankAccount> sameCustomer= new ArrayList<BankAccount>();
+	ArrayList<BankAccount> findAccountsForHolder(long idNr) {
+		ArrayList<BankAccount> sameCustomer = new ArrayList<BankAccount>();
 		for (BankAccount account : BankAccounts) {
 			if (account.isHolder(idNr)) {
 				sameCustomer.add(account);
@@ -100,8 +112,8 @@ public class Bank {
 		}
 		return sameCustomer;
 	}
-	
-	public ArrayList<Customer> findByPartofName(String namePart){
+
+	public ArrayList<Customer> findByPartofName(String namePart) {
 		ArrayList<Customer> customers = new ArrayList<Customer>();
 		for (BankAccount account : BankAccounts) {
 			if (account.getHolder().getString().toLowerCase().contains(namePart.toLowerCase())) {
@@ -111,6 +123,8 @@ public class Bank {
 		return customers;
 	}
 	
-
+	public String toString() {
+		return name;
+	}
 
 }
