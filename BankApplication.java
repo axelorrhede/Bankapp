@@ -83,12 +83,15 @@ public class BankApplication {
 	}
 	
 	public static BankAccount getBankAccount() {
-		System.out.println("Namnet på er bank är nu" + bank.toString());
-		System.out.println("Find Holder " + bank.findHolder(7474783));
+		
 		
 	}
 	
 	public static Customer findCustomer() {
+		
+		System.out.println();
+		String person = sc.next();
+		return bank.findByPartofName(person);
 		
 	}
 	
