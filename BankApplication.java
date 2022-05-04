@@ -1,9 +1,10 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BankApplication {
 
 	private static Scanner sc;
-	private static Bank bank; 
+	private static Bank bank;
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -13,58 +14,46 @@ public class BankApplication {
 		Bank bank = new Bank(sc.next());
 		System.out.println("Välkommen till " + bank.toString());
 		System.out.println("Vad önskar ni göra?");
-		
 
 		while (true) {
 			intro();
-			int val = sc.nextInt();
-
+			int val = 0; 
 			try {
+	
+				 val = sc.nextInt();
+			
 
-				if (val > 8 || val < 1) {
-					System.out.println("Detta är dessvärre inte ett giltigt val. Försök igen");
-				}
-
-				if (val == 1) {
+				switch (val) {
+				case 1:
 					getBankAccount();
-				}
-				if (val == 2) {
+				case 2:
 					findCustomer();
-				}
-				
-				if (val == 3) {
-					deposit();				
-				}
-				
-				if (val == 4) {
+				case 3:
+					deposit();
+				case 4:
 					withdraw();
-				}
-				
-				if (val == 5) {
+				case 5:
 					transfer();
-				}
-				
-				if (val == 6) {
+				case 6:
 					createAccount();
-					
-				}
-				
-				if (val == 7) {
+				case 7:
 					removeAccount();
-					
+				case 8:
+					System.out.println("Bankprogrammet avslutas."); // Lägg till "sparar" promt här
+					break;
+				default:
+					System.out.println("Detta är dessvärre inte ett giltigt val. Försök igen");
+					continue;
 				}
+
+			} catch (InputMismatchException e) {
+				System.out.println("Detta är dessvärre inte ett giltigt val. Försök igen"); 
+				continue;
 				
-				if (val == 8) {
-					System.out.println("Bankprogrammet avslutas.");     //Lägg till "sparar" promt här 
-					break; 
-					
-				}
 
-			} catch (Exception e) {
-				System.out.println("Detta är dessvärre inte ett giltigt val. Försök igen");
-				continue; 
+			} finally {
+				sc.nextLine(); //För att fånga upp retur-knappen
 			}
-
 		}
 
 	}
@@ -78,46 +67,54 @@ public class BankApplication {
 		System.out.println("Tryck 6 för att skapa ett nytt konto");
 		System.out.println("Tryck 7 för att ta bort ett konto");
 		System.out.println("Tryck 8 för att för att avsluta programmet");
-		
 
 	}
-	
+
 	public static BankAccount getBankAccount() {
-		
-		
+		System.out.println("Vill ni söka på kundnummer eller personnummer?");
+		System.out.println("Tryck 1 för kundnummer och 2 för personnummer.");
+		int val = sc.nextInt();
+		while (true) {
+			switch (val) {
+			case 1: // Kod för att söka på kundnummer;
+				break;
+			case 2: // Kod för att söka på personnummer;
+				break;
+			default:
+				System.out.println("Detta är dessvärre inte ett giltigt val. Försök igen");
+				continue;
+
+			}
+		}
+
 	}
-	
+
 	public static Customer findCustomer() {
-		
-		System.out.println();
+
+		System.out.println("Mata in vilken person du vill söka efter");
 		String person = sc.next();
-		return bank.findByPartofName(person);
-		
+		System.out.println("Vem av dessa personer? " + bank.findByPartofName(person));
+
 	}
-	
+
 	public static void deposit() {
-		
+
 	}
-	
+
 	public static void withdraw() {
-		
+
 	}
-	
+
 	public static void transfer() {
-		
+
 	}
-	
+
 	public static void createAccount() {
-		
+
 	}
-	
+
 	public static void removeAccount() {
-		
-		
+
 	}
-	
-	
-	
-	
 
 }
