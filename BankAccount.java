@@ -3,7 +3,7 @@ import java.util.Random;
 public class BankAccount {
 
 	private double amount;
-	private int kontoId;
+	private int accountNbr;
 	private Random rand = new Random();
 	private Customer holder; 
 
@@ -15,7 +15,7 @@ public class BankAccount {
 	public BankAccount(String holderName, long holderId) {
 		holder = new Customer(holderName, holderId); 
 		amount = 0;
-		kontoId = rand.nextInt(Integer.MAX_VALUE - 1000) + 1000;
+		accountNbr = rand.nextInt(Integer.MAX_VALUE - 1000) + 1000;
 
 	}
 
@@ -26,7 +26,7 @@ public class BankAccount {
 
 	public BankAccount(Customer holder) {
 		this.holder = holder;
-		kontoId = rand.nextInt(Integer.MAX_VALUE - 1000) + 1000;
+		accountNbr = rand.nextInt(Integer.MAX_VALUE - 1000) + 1000;
 		amount = 0;
 
 	}
@@ -40,7 +40,7 @@ public class BankAccount {
 	/** Tar reda på det kontonummer som identifierar detta konto. */
 
 	public int getAccountNumber() {
-		return kontoId;
+		return accountNbr;
 
 	}
 
@@ -67,12 +67,12 @@ public class BankAccount {
 
 	/** Returnerar en strängrepresentation av bankkontot. */
 	public String toString() {
-		return "Saldo: " + amount + "\n Kontoid :" + kontoId + "\n" + holder.getString();  
+		return "Saldo: " + amount + "\n Kontoid :" + accountNbr + "\n" + holder.getString();  
 
 	}
 	
 	public boolean isHolder(long idNbr) {
-		return (idNbr == holder.getcustomerNbr());
+		return (idNbr == holder.getidNr());
 		
 	}
 

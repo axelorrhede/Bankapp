@@ -2,9 +2,11 @@ import java.util.ArrayList;
 
 public class Bank {
 	private ArrayList<BankAccount> BankAccounts;
+	String name;
 
-	public Bank() {
+	public Bank(String name) {
 		BankAccounts = new ArrayList<BankAccount>();
+		this.name = name;
 	}
 
 	public int addAccount(String holderName, long idNr) {
@@ -108,6 +110,7 @@ public class Bank {
 		}
 		return customers;
 	}
+	
 
 
 }
