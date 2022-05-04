@@ -1,6 +1,5 @@
 
-public class BankApplication {
-	
+public class Braskit {
 
 	public static void main(String[] args) {
 		Bank mybank = new Bank("Swedbank");
@@ -15,8 +14,7 @@ public class BankApplication {
 
 		System.out.println("Remove account "+ mybank.removeAccount(mybank.findAccountsForHolder(7474783).get(0).getAccountNumber()));
 
-		
-		
+
 	}
 
 }
