@@ -68,14 +68,14 @@ public class BankApplication {
 
 	public BankAccount getBankAccount() {
 		System.out.println("Ange personnummer: ");
-		int idNr = scanner(111111111);
+		long idNr = scanner(Long.MAX_VALUE);
 		ArrayList<BankAccount> accounts = bank.findAccountsForHolder(idNr);
 		System.out.println("Välj ett konto: ");
 		for (int i = 0; i < accounts.size(); i++) {
-			System.out.println("Skriv " + i + " för konto: " + accounts.get(i));
+			System.out.println("Skriv " + i + 1 + " för konto: " + accounts.get(i));
 
 		}
-		return accounts.get(scanner(accounts.size()));
+		return accounts.get(scanner(accounts.size())-1);
 
 	}
 
@@ -86,9 +86,10 @@ public class BankApplication {
 		ArrayList<Customer> customers = bank.findByPartofName(person);
 		for (Customer customer: customers) {
 			sum++;
-			System.out.println("val " + sum + customer);
+			System.out.println("val " + sum +" är: " + customer);
 		}
-		return customers.get(scanner(customers.size()));
+		
+		return customers.get(scanner(customers.size())-1);
 
 	}
 
