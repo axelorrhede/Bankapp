@@ -67,7 +67,7 @@ public class BankAccount {
 
 	/** Returnerar en strängrepresentation av bankkontot. */
 	public String toString() {
-		return "Saldo: " + amount + "\n Kontoid :" + accountNbr + "\n" + holder.getString();  
+		return  holder.getString() + "\nSaldo: " + amount + "\n Kontoid :" + accountNbr;  
 
 	}
 	

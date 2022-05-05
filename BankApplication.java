@@ -5,7 +5,7 @@ public class BankApplication {
 
 	private static Scanner sc;
 	private Bank bank;
-	private int sum; 
+	private int sum;
 
 	public BankApplication() {
 		sc = new Scanner(System.in);
@@ -14,17 +14,18 @@ public class BankApplication {
 		bank = new Bank(sc.nextLine());
 		System.out.println("Välkommen till " + bank.toString());
 		System.out.println("Vad önskar ni göra?");
-		
+
 		int val;
-			boolean kor = true;  // Boolean för att köra programmet 
+		boolean kor = true; // Boolean för att köra programmet
 		while (kor) {
 			intro();
-			val = scanner(8);
+			val = scanner(9);
 			System.out.println("Du valde val: " + val);
 
 			switch (val) {
 			case 1:
-				getBankAccount();
+				BankAccount bankkonto = getBankAccount();
+				System.out.println(bankkonto.toString());
 				break;
 			case 2:
 				findCustomer();
@@ -45,11 +46,13 @@ public class BankApplication {
 				removeAccount();
 				break;
 			case 8:
+				showAccounts();
+				break; 
+			case 9: 
 				System.out.println("Bankprogrammet avslutas."); // Lägg till "sparar" promt här
-				kor = false; 
+				kor = false;
 				break;
 			}
-			System.out.println("-----------------------------------------------------------------");
 
 		}
 
@@ -63,21 +66,26 @@ public class BankApplication {
 		System.out.println("Tryck 5 för att överföra pengar från ett konto till ett annat");
 		System.out.println("Tryck 6 för att skapa ett nytt konto");
 		System.out.println("Tryck 7 för att ta bort ett konto");
-		System.out.println("Tryck 8 för att för att avsluta programmet");
+		System.out.println("Tryck 8 för att för att visa en lista på samtliga användare");
+		System.out.println("Tryck 9 för att för att avsluta programmet");
+		System.out.println("-----------------------------------------------------------------");
 
 	}
 
 	public BankAccount getBankAccount() {
-		System.out.println("Ange personnummer: ");
-		long idNr = scanner(Long.MAX_VALUE);
-		ArrayList<BankAccount> accounts = bank.findAccountsForHolder(idNr);
-		System.out.println("Välj ett konto: ");
-		for (int i = 0; i < accounts.size(); i++) {
-			System.out.println("Skriv " + i + 1 + " för konto: " + accounts.get(i));
+		while(true) {
+			System.out.println("Ange personnummer: ");
+			long idNr = scanner(Long.MAX_VALUE);
+			if (bank.findHolder(idNr) != null) {
+				ArrayList<BankAccount> accounts = bank.findAccountsForHolder(idNr);
+				for (int i = 0; i < accounts.size(); i++) {
+					System.out.println("Skriv " + (i + 1) + " för konto: " + accounts.get(i));
 
+				}
+				return accounts.get(scanner(accounts.size()) - 1);
+			}
+			System.out.println("Detta personnummer har inget konto på vår bank");
 		}
-		return accounts.get(scanner(accounts.size())-1);
-
 	}
 
 	public Customer findCustomer() {
@@ -85,12 +93,12 @@ public class BankApplication {
 		String person = scanner();
 		System.out.println("Vem av dessa personer? " + bank.findByPartofName(person));
 		ArrayList<Customer> customers = bank.findByPartofName(person);
-		for (Customer customer: customers) {
+		for (Customer customer : customers) {
 			sum++;
-			System.out.println("val " + sum +" är: " + customer);
+			System.out.println("val " + sum + " är: " + customer);
 		}
-		
-		return customers.get(scanner(customers.size())-1);
+
+		return customers.get(scanner(customers.size()) - 1);
 
 	}
 
@@ -113,12 +121,14 @@ public class BankApplication {
 
 	public void transfer() {
 		BankAccount account = getBankAccount();
-		System.out.println("Detta konto har: " + account.getAmount() + " SEK");
+		System.out.println("Detta konto har nu: " + account.getAmount() + " SEK");
+		System.out.println("Hur mycket vill ni överföra?");
 		double value = scanner(account.getAmount() + 1000.0);
-		account.withdraw(scanner(account.getAmount() + 1000.0));
+		account.withdraw(value);
+		System.out.println("Till vilken person vill ni överföra pengarna");
 		BankAccount account2 = getBankAccount(); // Nytt kontoobjekt där man lägger till pengar
 		account2.deposit(value);
-		System.out.println("Detta konto har: " + account2.getAmount() + " SEK");
+		System.out.println("Detta konto har nu: " + account2.getAmount() + " SEK");
 
 	}
 
@@ -127,12 +137,21 @@ public class BankApplication {
 		String name = scanner();
 		System.out.println("Ange Personnummer: ");
 		Long idNr = scanner(Long.MAX_VALUE);
-		bank.addAccount(name, idNr);
+		int accNBR = bank.addAccount(name, idNr); // Skapar ett konto och sparar ner kontonumret;
+
 		System.out.println("Konto för " + name + " med personnummer: " + idNr + " har nu skapats");
+		System.out.println("Kontonummer: " + accNBR);
 
 	}
 
 	public void removeAccount() {
+		BankAccount account = getBankAccount();
+		if (bank.removeAccount(account.getAccountNumber())) {
+			System.out.println(
+					"Kontot " + account.getAccountNumber() + " tillhörandes " + account.getHolder() + " och är nu borttaget");
+		} else {
+			System.out.println("Ett fel har uppstått, kontakta administratör");
+		}
 
 	}
 
@@ -151,8 +170,6 @@ public class BankApplication {
 				System.out.println("Detta är dessvärre inte ett giltigt val. Försök igen");
 				continue;
 
-				// } finally {
-				// sc.nextLine(); // För att fånga upp retur-knappen
 			}
 		}
 	}
@@ -172,8 +189,6 @@ public class BankApplication {
 				System.out.println("Detta är dessvärre inte ett giltigt val. Försök igen");
 				continue;
 
-				// } finally {
-				// sc.nextLine(); // För att fånga upp retur-knappen
 			}
 		}
 	}
@@ -190,8 +205,6 @@ public class BankApplication {
 				System.out.println("Detta är dessvärre inte ett giltigt val. Försök igen");
 				continue;
 
-				// } finally {
-				// sc.nextLine(); // För att fånga upp retur-knappen
 			}
 		}
 	}
@@ -211,9 +224,15 @@ public class BankApplication {
 				System.out.println("Detta är dessvärre inte ett giltigt val. Försök igen");
 				continue;
 
-				// } finally {
-				// sc.nextLine(); // För att fånga upp retur-knappen
 			}
+		}
+	}
+	
+	public void showAccounts() {
+		System.out.println("Nedan visas en lista på samtliga konton i banken:");
+		ArrayList<BankAccount> list = bank.getAllAccounts();
+		for (BankAccount account: list) {
+			System.out.println(account.toString());
 		}
 	}
 

@@ -11,11 +11,6 @@ public class Bank {
 	}
 
 	public int addAccount(String holderName, long idNr) {
-		for (BankAccount account : BankAccounts) {
-			if (account.isHolder(idNr)) {
-				return account.getAccountNumber();
-			}
-		}
 		Boolean exist = true;
 		while (exist) {
 			exist = false;
