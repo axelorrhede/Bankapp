@@ -49,6 +49,7 @@ public class BankApplication {
 				kor = false; 
 				break;
 			}
+			System.out.println("-----------------------------------------------------------------");
 
 		}
 
@@ -95,15 +96,18 @@ public class BankApplication {
 
 	public void deposit() {
 		BankAccount account = getBankAccount();
+		System.out.println("Skriv in hur mycket pengar som ni önskar sätta in");
 		account.deposit(scanner(Double.MAX_VALUE));
-		System.out.println("Detta konto har: " + account.getAmount() + " SEK");
+		System.out.println("Detta konto har nu: " + account.getAmount() + " SEK");
 
 	}
 
 	public void withdraw() {
 		BankAccount account = getBankAccount();
+		System.out.println("Hur mycket pengar önskar ni ta ut?");
+		System.out.println("Ni kan som mest ha 1000 SEK i kredit.");
 		account.withdraw(scanner(account.getAmount() + 1000.0)); // Max back 1000 kr
-		System.out.println("Detta konto har: " + account.getAmount() + " SEK");
+		System.out.println("Detta konto har nu: " + account.getAmount() + " SEK");
 
 	}
 
