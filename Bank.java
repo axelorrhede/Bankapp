@@ -64,29 +64,17 @@ public class Bank {
 	}
 
 	private boolean compareStrings(String p1, String p2) {
-		if (p1.length() < p2.length()) {
-			for (int i = 0; i < p1.length(); i++) {
-				if (p1.charAt(i) < p2.charAt(i)) {
-					return true;
-				}
-				if (p1.charAt(i) > p2.charAt(i)) {
-					return false;
-
-				}
+		int min = Math.min(p1.length() , p2.length())
+		for (int i = 0; i < min; i++) {
+			if (p1.charAt(i) < p2.charAt(i)) {
+				return true;
 			}
-			return true;
-		} else {
-			for (int i = 0; i < p2.length(); i++) {
-				if (p1.charAt(i) < p2.charAt(i)) {
-					return true;
-				}
-				if (p1.charAt(i) > p2.charAt(i)) {
-					return false;
+			if (p1.charAt(i) > p2.charAt(i)) {
+				return false;
 
-				}
 			}
-			return false;
 		}
+		return p1.length() < p2.length()
 	}
 
 	public BankAccount findByNumber(int accountNumber) {
